@@ -1,16 +1,15 @@
-# fog_of_wall.py
 from flask import Flask, request, jsonify
-from flask import Flask
-from mangum import Mangum   # 用于兼容 Vercel / AWS Lambda
+from mangum import Mangum  # 用于兼容 serverless
 
 app = Flask(__name__)
 
 @app.route("/fog-of-wall", methods=["POST"])
 def fog_of_wall():
     data = request.get_json()
-    # 这里直接返回 demo
+    # 这里你可以放你原来的逻辑
     return jsonify({"message": "Hello, fog-of-wall!", "data": data})
 
+# 关键：serverless handler
 handler = Mangum(app)
 
 # 全局：保存每个 (challenger_id, game_id) 的会话状态
@@ -20,7 +19,7 @@ state_lock = Lock()  # 简单的线程锁，避免并发请求时状态竞争
 # ---- 帮助函数 ----
 def apply_direction(pos, direction):
     """从 pos (x,y) 按 direction 得到目标坐标。
-       坐标系：x 向右增大，y 向下增大（题目 top-left (0,0)）。"""
+       坐标系：x 向右增大，y 向下增大（题目 top-left (0,0)）。"""from flask import Flask, request, jsonify
     x, y = pos
     if direction == "N":
         return (x, y - 1)
