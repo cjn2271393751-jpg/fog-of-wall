@@ -1,16 +1,17 @@
-# fog_of_wall.py
 from flask import Flask, request, jsonify
-from flask import Flask
-from mangum import Mangum   # 用于兼容 Vercel / AWS Lambda
+from mangum import Mangum   # 让 Flask 适配 Vercel Serverless
 
 app = Flask(__name__)
 
 @app.route("/fog-of-wall", methods=["POST"])
 def fog_of_wall():
     data = request.get_json()
-    # 这里直接返回 demo
-    return jsonify({"message": "Hello, fog-of-wall!", "data": data})
+    return jsonify({
+        "message": "Hello from app.py root!",
+        "data": data
+    })
 
+# 这里不要写 app.run()
 handler = Mangum(app)
 
 # 全局：保存每个 (challenger_id, game_id) 的会话状态
@@ -361,5 +362,4 @@ def fog_of_wall():
 # ---- 启动 ----
 if __name__ == "__main__":
     # 开发用： debug=True（部署时关闭）
-
     app.run(host="0.0.0.0", port=8000, debug=True)

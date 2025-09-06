@@ -2,17 +2,14 @@
   "version": 2,
   "builds": [
     {
-      "src": "api/fog_of_wall.py",
+      "src": "app.py",
       "use": "@vercel/python"
     }
   ],
   "routes": [
     {
       "src": "/fog-of-wall",
-      "dest": "/api/fog_of_wall.py/fog-of-wall"
+      "dest": "/app.py"
     }
   ]
-
 }
-
-
