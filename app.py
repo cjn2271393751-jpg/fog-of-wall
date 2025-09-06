@@ -1,15 +1,17 @@
-"""
-Fog of Wall - Flask 服务端实现
-保存为 app.py，然后运行： python app.py
-依赖：Flask -> 在 requirements.txt 写入 flask 并 pip install -r requirements.txt
-"""
-
+# fog_of_wall.py
 from flask import Flask, request, jsonify
-from collections import deque
-from threading import Lock
-import json
+from flask import Flask
+from mangum import Mangum   # 用于兼容 Vercel / AWS Lambda
 
 app = Flask(__name__)
+
+@app.route("/fog-of-wall", methods=["POST"])
+def fog_of_wall():
+    data = request.get_json()
+    # 这里直接返回 demo
+    return jsonify({"message": "Hello, fog-of-wall!", "data": data})
+
+handler = Mangum(app)
 
 # 全局：保存每个 (challenger_id, game_id) 的会话状态
 game_states = {}
@@ -359,4 +361,5 @@ def fog_of_wall():
 # ---- 启动 ----
 if __name__ == "__main__":
     # 开发用： debug=True（部署时关闭）
+
     app.run(host="0.0.0.0", port=8000, debug=True)
