@@ -8,10 +8,11 @@
   ],
   "routes": [
     {
-      "src": "/api/fog-of-wall",
-      "dest": "/fog_of_wall.py"
+      "src": "/fog-of-wall",
+      "dest": "/api/fog_of_wall.py/fog-of-wall"
     }
   ]
 
 }
+
 
